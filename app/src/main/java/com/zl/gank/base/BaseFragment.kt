@@ -11,7 +11,6 @@ import android.widget.RelativeLayout
 import com.zl.gank.R
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
-import rx.subscriptions.Subscriptions
 
 /**
  * Created by lvruheng on 2017/7/4.
@@ -44,7 +43,7 @@ abstract class BaseFragment<SV : ViewDataBinding> : Fragment() {
             isFragmentVisiable = true
         }
         if (rootView == null) {
-            return;
+            return
         }
         //可见，并且没有加载过
         if (!isFirst && isFragmentVisiable) {
@@ -82,7 +81,7 @@ abstract class BaseFragment<SV : ViewDataBinding> : Fragment() {
 
     fun removeSubscription() {
         if (this.mCompositeSubscription != null && mCompositeSubscription!!.hasSubscriptions()) {
-            this.mCompositeSubscription?.unsubscribe();
+            this.mCompositeSubscription?.unsubscribe()
         }
     }
 }
