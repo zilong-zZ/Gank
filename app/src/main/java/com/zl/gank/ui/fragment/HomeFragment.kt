@@ -1,7 +1,7 @@
 package com.example.zilongsong.kotlindemo
 
-import com.tt.lvruheng.eyepetizer.ui.fragment.BaseFragment
 import com.zl.gank.R
+import com.zl.gank.base.BaseFragment
 import com.zl.gank.databinding.HomeFragmentBinding
 
 /**
