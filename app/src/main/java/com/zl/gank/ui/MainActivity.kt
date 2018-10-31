@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
-    var homeFragment: HomeFragment? = null
+    private lateinit var homeFragment: HomeFragment
 
     override fun getContentViewId(): Int {
         return R.layout.activity_main
