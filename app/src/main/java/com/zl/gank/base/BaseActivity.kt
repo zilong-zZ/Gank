@@ -16,7 +16,6 @@ abstract class BaseActivity<SV : ViewDataBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingView = DataBindingUtil.setContentView(this, getContentViewId())
         init(savedInstanceState)
-        //ssss
     }
 
 

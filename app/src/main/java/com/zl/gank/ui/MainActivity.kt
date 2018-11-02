@@ -1,9 +1,15 @@
 package com.zl.gank.ui
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import com.example.zilongsong.kotlindemo.HomeFragment
@@ -14,12 +20,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var homeFragment: HomeFragment
+    val items = listOf("主页", "安卓", "苹果")
 
     override fun getContentViewId(): Int {
         return R.layout.activity_main
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun init(savedInstanceState: Bundle?) {
         val toggle = ActionBarDrawerToggle(
                 this, bindingView?.drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -28,27 +35,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NavigationView.OnNavig
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        initFragment(savedInstanceState)
+        val tablayout = bindingView?.include?.findViewById<TabLayout>(R.id.table_layout)
+        tablayout?.tabMode = TabLayout.MODE_FIXED
+        tablayout?.setBackgroundColor(Color.BLUE)
+        for (item in items) {
+            tablayout?.addTab(tablayout.newTab().setText(item))
+        }
+        tablayout?.setTabTextColors(Color.YELLOW, Color.WHITE)
+        tablayout?.setSelectedTabIndicatorColor(R.color.colorAccent)
+        tablayout?.getTabAt(0)?.select()
+
+        val viewPager = bindingView?.include?.findViewById<ViewPager>(R.id.view_pager)
+        val adapter = PageAdapter(supportFragmentManager)
+        viewPager?.adapter = adapter
     }
 
-    private fun initFragment(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            //异常情况
-            val mFragments: List<Fragment> = supportFragmentManager.fragments
-            for (item in mFragments) {
-                if (item is HomeFragment) {
-                    homeFragment = item
-                }
-            }
-        } else {
-            homeFragment = HomeFragment()
+    class PageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-            val fragmentTrans = supportFragmentManager.beginTransaction()
-            fragmentTrans.add(R.id.fl_content, homeFragment)
-            fragmentTrans.commit()
+        var fragments: MutableList<Fragment> = ArrayList()
+
+        init {
+            fragments.add(HomeFragment())
+            fragments.add(HomeFragment())
+            fragments.add(HomeFragment())
         }
-        supportFragmentManager.beginTransaction().show(homeFragment)
-                .commit()
+
+        override fun getCount(): Int = fragments.size
+
+        override fun getItem(p0: Int): Fragment {
+            return fragments[p0]
+        }
+
     }
 
     override fun onBackPressed() {

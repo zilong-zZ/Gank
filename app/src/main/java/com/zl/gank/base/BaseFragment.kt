@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
-import com.zl.gank.R
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
 
@@ -18,17 +16,12 @@ import rx.subscriptions.CompositeSubscription
 abstract class BaseFragment<SV : ViewDataBinding> : Fragment() {
     var bindingView: SV? = null
     var isFirst: Boolean = false
-    var rootView: View? = null
     var isFragmentVisiable: Boolean = false
     private var mCompositeSubscription: CompositeSubscription? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_base, container, false)
-        bindingView = DataBindingUtil.inflate(activity!!.layoutInflater, getLayoutResources(), null, false)
-        val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        bindingView?.root?.layoutParams = params
-        container?.addView(bindingView?.root)
-        return rootView
+        bindingView = DataBindingUtil.inflate(inflater, getLayoutResources(), container, false)
+        return bindingView?.root
     }
 
 
@@ -42,7 +35,7 @@ abstract class BaseFragment<SV : ViewDataBinding> : Fragment() {
         if (isVisibleToUser) {
             isFragmentVisiable = true
         }
-        if (rootView == null) {
+        if (bindingView?.root == null) {
             return
         }
         //可见，并且没有加载过
