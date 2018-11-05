@@ -36,6 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NavigationView.OnNavig
         nav_view.setNavigationItemSelectedListener(this)
 
         val tablayout = bindingView?.include?.findViewById<TabLayout>(R.id.table_layout)
+        val viewPager = bindingView?.include?.findViewById<ViewPager>(R.id.view_pager)
         tablayout?.tabMode = TabLayout.MODE_FIXED
         tablayout?.setBackgroundColor(Color.BLUE)
         for (item in items) {
@@ -45,9 +46,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NavigationView.OnNavig
         tablayout?.setSelectedTabIndicatorColor(R.color.colorAccent)
         tablayout?.getTabAt(0)?.select()
 
-        val viewPager = bindingView?.include?.findViewById<ViewPager>(R.id.view_pager)
+        tablayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewPager?.setCurrentItem(tab!!.position, true)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
         val adapter = PageAdapter(supportFragmentManager)
         viewPager?.adapter = adapter
+        viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                tablayout?.getTabAt(position)?.select()
+            }
+        })
     }
 
     class PageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
