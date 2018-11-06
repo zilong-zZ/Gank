@@ -1,4 +1,4 @@
-package com.zl.gank.ui
+package com.zl.gank.view
 
 import android.annotation.SuppressLint
 import android.graphics.Color

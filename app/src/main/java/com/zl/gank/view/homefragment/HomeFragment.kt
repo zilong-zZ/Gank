@@ -9,7 +9,7 @@ import com.zl.gank.R
 import com.zl.gank.base.BaseFragment
 import com.zl.gank.data.ClassificationBean
 import com.zl.gank.databinding.HomeFragmentBinding
-import com.zl.gank.ui.homefragment.HomeRecyAdapter
+import com.zl.gank.view.homefragment.HomeRecyAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

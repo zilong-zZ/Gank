@@ -1,4 +1,4 @@
-package com.zl.gank.ui.homefragment
+package com.zl.gank.view.homefragment
 
 import android.content.Context
 import android.databinding.DataBindingUtil
